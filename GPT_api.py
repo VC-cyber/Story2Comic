@@ -6,7 +6,7 @@ load_dotenv()
 openai.api_key = os.getenv('API_KEY')
 
 def summarize_to_script(story):
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model="gpt-4",  # Or use "gpt-3.5-turbo" if GPT-4 is unavailable
         messages=[
             {"role": "system", "content": "Convert the following story into a comic script with dialogue."},
@@ -16,7 +16,7 @@ def summarize_to_script(story):
         temperature=0.7,  # Creativity level
         n=1
     )
-    script = response["choices"][0]["message"]["content"]
+    script = response.choices[0].message.content
     return script
 
 with open("story.txt", "r") as file:
